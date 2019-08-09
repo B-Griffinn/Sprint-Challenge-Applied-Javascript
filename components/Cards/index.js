@@ -48,18 +48,18 @@ function lambCards(obj){
     //structure / append
     parentDiv.appendChild(headlineDiv);
     parentDiv.appendChild(authorDiv);
-    parentDiv.appendChild(authorDiv);
             //**
     authorDiv.appendChild(imgDiv);
-    imgDiv.appendChild(img);
+    authorDiv.appendChild(authNameSpan);
           //**
-    authorDiv.appendChild(authNameSpan);      
+    authorDiv.appendChild(authNameSpan);   
+    imgDiv.appendChild(img);
     
     //text content and img src
     headlineDiv.textContent = `${obj.headline}`;
 
-    imgDiv.setAttribute('src', `${obj.authorPhoto}`);
-    imgDiv.setAttribute('alt', 'authors picture');
+    img.setAttribute('src', `${obj.authorPhoto}`);
+    // imgDiv.setAttribute('alt', 'authors picture');
    
     authNameSpan.textContent = `By ${obj.authorName}`;
     
