@@ -8,31 +8,32 @@
 //  The tab component should look like this:
 //    <div class="tab">topic here</div>
 
-let newTopic = document.querySelector('.topics');
 
-const ourAPI = axios.get('https://lambda-times-backend.herokuapp.com/topics')
-.then((response) => {
-    console.log(response)
-    response.data.topics.forEach(item => {
-        let topic = new tab(item);
-        newTopic.appendChild(topic);    
-    });
-});
+//GET the api provided 
+const ourAPI = axios.get('https://lambda-times-backend.herokuapp.com/topics');
+// .then((response) => {
+//     console.log(response)
+//     response.data.topics.forEach(item => {
+//         let topic = new tab(item);
+//         newTopic.appendChild(topic);    
+//     });
+// });
 
+// select our parent where we will append everything to
+let topicSelector = document.querySelector('.topics');
 
-//my tab Components
+// using a promise from the api loop through all 5 topics in order to create a tab element for each
 
-function tab(obj) {
-//create element(s)
-const tab = document.createElement('div');
-
-// set class names
-tab.classList.add('tab');
-
-// text content 
-tab.textContent = `${obj}`;
-
-//return parent
-return tab;
-
-} // end tab component 
+ourAPI.then(response => {
+    response.data.topics.forEach(topic => {
+        //create components here
+        const ourTab = document.createElement('div');
+        ourTab.classList.add('tab');
+        ourTab.textContent =  `${topic}`;
+        topicSelector.appendChild(ourTab);
+    })
+    
+}) //end of THEN
+.catch(err => {
+        console.log(err);
+    }) //end of CATCH

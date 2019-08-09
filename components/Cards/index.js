@@ -20,20 +20,13 @@
 //
 // Create a card for each of the articles and add the card to the DOM.
 
+
+// GET data from provided server
+let articleAPI = axios.get('https://lambda-times-backend.herokuapp.com/articles');
+
+// SELECT the class I need to append everything to
 let cardContainer = document.querySelector('.cards-container');
 
-// Get Request for lambda articles
-axios.get('https://lambda-times-backend.herokuapp.com/articles')
-// console.log(lambAPI)
-.then((response) => {
-    console.log(response);
-    response.data.articles.javascript.forEach(item => {
-        let newCard = new lambCards(item);
-        cardContainer.appendChild(newCard);
-        })
-    })
-    // cardContainer.appendChild(lambCards(response.data.articles))
-// })
 
 // a function that will programmatically create the above DOM component:
 function lambCards(obj){
@@ -62,50 +55,53 @@ function lambCards(obj){
           //**
     authorDiv.appendChild(authNameSpan);      
     
-    
     //text content and img src
-    headlineDiv.textContent = obj.headline
+    headlineDiv.textContent = `${obj.headline}`;
 
-    imgDiv.src = obj.authorPhoto;
+    imgDiv.setAttribute('src', `${obj.authorPhoto}`);
+    imgDiv.setAttribute('alt', 'authors picture');
    
-
-    authNameSpan.textContent = obj.authorName;
+    authNameSpan.textContent = `By ${obj.authorName}`;
     
     // return
     return parentDiv;
     
     } //end lambCards comp
-    
 
+    //loop through our api to find each structure
+    articleAPI.then(response => {
+        //js structure
+        const js = response.data.articles.javascript;
+        console.log(js);
+        js.forEach(article => {
+            cardContainer.appendChild(lambCards(article));
+        }) //end of js structure
 
+        //bootstrap structure
+        const boot = response.data.articles.bootstrap;
+        console.log(boot);
+        boot.forEach(article => {
+            cardContainer.appendChild(lambCards(article)); 
+        })
 
-    // let cardContainer = document.querySelector('.cards-container');
-    // Get Request for lambda articles
-    // axios.get('https://lambda-times-backend.herokuapp.com/articles')
-    // .then((response) => {
-    //     console.log(response.data);
-    //     response.data.articles.forEach(item => {
-    //       let newArt = new lambCards(item);
-    //       cardContainer.appendChild(newArt);
-    //     })
-    //     .catch((err => {
-    //       console.log(err)
-    //     }))
-    // })
+        // technology structure
+        const technology = response.data.articles.technology;
+        console.log(technology);
+        boot.forEach(article => {
+            cardContainer.appendChild(lambCards(article)); 
+        })
 
-    // const ourAPI = axios.get('https://lambda-times-backend.herokuapp.com/topics')
-// .then((response) => {
-//     console.log(response)
-//     response.data.topics.forEach(item => {
-//         let topic = new tab(item);
-//         newTopic.appendChild(topic);    
-//     });
-// });
+        //jquery structure
+        const jquery = response.data.articles.jquery;
+        console.log(jquery);
+        boot.forEach(article => {
+            cardContainer.appendChild(lambCards(article)); 
+        })
 
-// let ourLoop = theData.forEach(article => {
-//     axios.get(`https://lambda-times-backend.herokuapp.com/articles/${article}`)
-//     .then((response) => {
-//         cardContainer.appendChild(lambCards(response.data))
-//     })
-    
-// });
+        //node.js structure
+        const node  = response.data.articles.bootstrap;
+        console.log(node );
+        boot.forEach(article => {
+            cardContainer.appendChild(lambCards(article)); 
+        })
+    })
